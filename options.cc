@@ -8,7 +8,7 @@
 Options Options::instance_;
 
 Options::Options()
-  : sizeX(128), sizeY(128)
+  : sizeX(128), sizeY(128), sceneFile("scene.tml")
 {}
 
 void Options::set(int argc, char** argv)
@@ -39,6 +39,8 @@ void Options::setArgument(const std::string& argname, const std::string& arg)
   } else if ( argname == "y" || argname == "sizey" || argname == "sizeY" ) {
     std::stringstream s(arg);
     s >> sizeY;
+  } else if ( argname == "scenefile" || argname == "scene" || argname == "sceneFile" ) {
+    sceneFile = arg;
   } else if ( argname == "help" || argname == "?" ) {
     printUsage();
   } else {
@@ -60,9 +62,10 @@ void Options::setFlag(const std::string& flagname)
 void Options::printUsage()
 {
   console::out() << "Usage:   burgersStochastic [options]" << std::endl << std::endl
-	    << "Options:" << std::endl
-	    << " --sizeX <resolution>          Set resolution in x-direction to <resolution>. Default is 128." << std::endl
-	    << " --sizeY <resolution>          Set resolution in y-direction to <resolution>. Default is 128." << std::endl
+		 << "Options:" << std::endl
+		 << " --sizeX <resolution>          Set resolution in x-direction to <resolution>. Default is 128." << std::endl
+		 << " --sizeY <resolution>          Set resolution in y-direction to <resolution>. Default is 128." << std::endl
+		 << " --sceneFile <file>            Set scenefile to <file>. Default is 'scene.tml'" << std::endl
     ;
   exit(1);
 }

@@ -15,6 +15,8 @@ class Options
 
   int sizeX, sizeY;
 
+  std::string sceneFile;
+
  private:
 
   static Options instance_;
