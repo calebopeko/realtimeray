@@ -27,6 +27,6 @@ private:
   real data[3];
 };
 
-std::ostream& operator<<(std::ostream& s, vec3 v);
+std::ostream& operator<<(std::ostream& s, const vec3& v);
 
 #endif

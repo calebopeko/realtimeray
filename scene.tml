@@ -1,21 +1,35 @@
 {
 objects = [
+
   {
     type = plane;
-    position = [4; 5; 6; ];
-    normal = [0; 0; 1;];
+    position = [0; -1; 0; ];
+    normal = [0; 1; 0;];
   };
 
   {
     type = plane;
-    position = [1; 2; 3; ];
-    normal = [0; 0; 1;];
+    position = [0; 0; 10; ];
+    normal = [0; 0; -1;];
   };
 
   {
     type = sphere;
-    center = [4; 5; 6; ];
-    radius = 3;
+    center = [0; 0; 5; ];
+    radius = 1;
   };
 ];
+
+lights = [
+  {
+    position = [0; 3; 3;];
+    color = [1.0; 1.0; 1.0;];
+  };
+];
+
+camera = {
+  position = [0; 0; 0;];
+  forward = [0; 0; 1;];
+  up = [0; 1; 0;];
+};
 }
