@@ -13,45 +13,11 @@ public:
 
 };
 
-class Plane
-  : public Object
-{
-public:
-
-  Plane(Value& v) { console::out() << "type=" << v("type") << " should be 'plane'" << std::endl; }
-};
-
-class Sphere
-  : public Object
-{
-public:
-
-  Sphere(Value& v) { console::out() << "type=" << v("type") << " should be 'sphere'" << std::endl; }
-};
-
-
-
 class ObjectBuilder
 {
 public:
 
   virtual Object* build(Value& v) = 0;
-};
-
-class PlaneBuilder
-  : public ObjectBuilder
-{
-public:
-
-  virtual Object* build(Value& v) { return new Plane(v); }
-};
-
-class SphereBuilder
-  : public ObjectBuilder
-{
-public:
-
-  virtual Object* build(Value& v) { return new Sphere(v); }
 };
 
 class ObjectFactory

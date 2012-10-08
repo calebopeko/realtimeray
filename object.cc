@@ -1,4 +1,6 @@
 #include "object.h"
+#include "plane.h"
+#include "sphere.h"
 
 ObjectFactory ObjectFactory::instance_;
 

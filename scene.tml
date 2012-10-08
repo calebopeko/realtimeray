@@ -3,11 +3,13 @@ objects = [
   {
     type = plane;
     position = [4; 5; 6; ];
+    normal = [0; 0; 1;];
   };
 
   {
     type = plane;
-    position = [4; 5; 6; ];
+    position = [1; 2; 3; ];
+    normal = [0; 0; 1;];
   };
 
   {
