@@ -5,7 +5,15 @@
 namespace console
 {
 
+  static std::ofstream debugStream;
+  
   static bool verbose_=false;
+
+  void init()
+  {
+    // debugStream.open("/dev/null");
+    debugStream.open("lpc.log");
+  }
 
   void out(const char* c)
   {
@@ -64,4 +72,8 @@ namespace console
     return std::cerr;
   }
 
+  std::ostream& dbg()
+  {
+    return debugStream;
+  }
 }

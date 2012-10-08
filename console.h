@@ -7,6 +7,8 @@
 
 namespace console
 {
+  void init();
+
   void verbose(bool v);
 
   bool verbose();
@@ -20,6 +22,7 @@ namespace console
 
   std::ostream& out();
   std::ostream& err();
+  std::ostream& dbg();
 }
 
 #endif
