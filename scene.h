@@ -12,11 +12,15 @@ class Scene
 {
 public:
 
-  Scene(const std::string& path);
+  Scene() {}
 
-  void render(const std::string& file);
+  void init(const std::string& path, int, int);
+
+  Color shade(int, int);
 
 private:
+
+  int sizeX, sizeY;
 
   Camera camera;
 

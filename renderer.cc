@@ -113,7 +113,7 @@ void Renderer::PrintEngine::FontEngine::textSize(std::string text, int* w, int* 
   }
 }
 
-void Renderer::init(int xsize, int ysize, int bpp, int fontsize)
+void Renderer::init(int xsize, int ysize, int bpp, int fontsize, const std::string& scenefile)
 {
   // screen = SDL_SetVideoMode(xsize, ysize, bpp, SDL_SWSURFACE | SDL_FULLSCREEN);
   screen = SDL_SetVideoMode(xsize, ysize, bpp, SDL_SWSURFACE);
@@ -123,12 +123,24 @@ void Renderer::init(int xsize, int ysize, int bpp, int fontsize)
     exit(1);
   }
   printEngine.init(std::string("FreeMono.ttf"), fontsize, screen);
+  scene.init(scenefile, xsize, ysize);
   renderMode_ = Render_Print | Render_World;
 }
 
 void Renderer::drawFrame()
 {
   initFrame();
+  if ( renderMode_ & Render_World ) {
+    for ( int ix=0; ix < xSize; ++ix ) {
+      for ( int iy=0; iy < ySize; ++iy ) {
+	Color c = scene.shade(ix, iy);
+	Uint8* pixel = (Uint8*) screen->pixels + iy*screen->pitch + ix*screen->format->BytesPerPixel;
+	for ( int v=0; v<3; v++ ) {
+	  pixel[2-v] = (Uint8) (c[v]*255);
+	}
+      }
+    }
+  }
   if ( renderMode_ & Render_Print ) printEngine.draw();
 }
 

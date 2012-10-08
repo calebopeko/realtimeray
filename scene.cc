@@ -1,8 +1,10 @@
 #include "scene.h"
 #include "tml.h"
 
-Scene::Scene(const std::string& path)
+void Scene::init(const std::string& path, int sx, int sy)
 {
+  sizeX = sx; sizeY = sy;
+
   Parser sceneFile(path);
   Value& fileObjects = sceneFile("objects");
   for (unsigned i = 0; i< fileObjects.size(); i++) {
@@ -19,6 +21,7 @@ Scene::Scene(const std::string& path)
   camera = Camera(sceneFile("camera"));
 }
 
-void Scene::render(const std::string& file)
+Color Scene::shade(int px, int py)
 {
+  return Color(1., 0., 0.);
 }

@@ -2,6 +2,8 @@
 #define RENDERER_H
 
 #include "draw.h"
+#include "scene.h"
+
 #include <string>
 #include <list>
 
@@ -81,7 +83,7 @@ class Renderer
   Renderer() 
     : xSize(-1), ySize(-1), renderMode_(Render_Print) {}
 
-  void init(int, int, int, int);
+  void init(int, int, int, int, const std::string& scenefile);
 
   void drawFrame();
 
@@ -108,6 +110,8 @@ class Renderer
   int renderMode_;
     
   PrintEngine printEngine;
+
+  Scene scene;
 
   SDL_Surface* screen;
 };
