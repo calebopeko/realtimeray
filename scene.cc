@@ -23,5 +23,7 @@ void Scene::init(const std::string& path, int sx, int sy)
 
 Color Scene::shade(int px, int py)
 {
-  return Color(1., 0., 0.);
+  vec3 start = camera.position + (px - sizeX/2)*camera.left + (py - sizeY/2)*camera.up;
+  real frac = (start - camera.position).length() / std::sqrt(sizeX*sizeX + sizeY*sizeY);
+  return Color(frac, 0., 0.);
 }

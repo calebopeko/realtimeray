@@ -2,8 +2,8 @@
 #ifndef SPHERE_H
 #define SPHERE_H
 
-#include "vec.h"
 #include "object.h"
+#include "color.h"
 
 class Sphere
   : public Object
@@ -17,6 +17,8 @@ private:
   vec3 center;
 
   real radius;
+
+  Color color;
 };
 
 class SphereBuilder

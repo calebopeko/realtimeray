@@ -3,7 +3,7 @@
 #define PLANE_H
 
 #include "object.h"
-#include "vec.h"
+#include "color.h"
 
 class Plane
   : public Object
@@ -15,6 +15,8 @@ public:
 private:
 
   vec3 position, normal;
+
+  Color color;
 };
 
 class PlaneBuilder

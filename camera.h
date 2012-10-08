@@ -12,9 +12,10 @@ public:
 
   Camera(const Value& v);
 
+  vec3 position, forward, up, left;
+
 private:
 
-  vec3 position, forward, up;
 };
 
 #endif

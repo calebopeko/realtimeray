@@ -6,3 +6,34 @@ std::ostream& operator<<(std::ostream& s, const vec3& v)
   return s;
 }
 
+vec3 vec3_cross(const vec3& a, const vec3& b)
+{
+  return vec3(a[1]*b[2] - a[2]*b[1],
+	      a[2]*b[0] - a[0]*b[2],
+	      a[0]*b[1] - a[1]*b[0]);
+}
+
+vec3 operator*(const real& d, const vec3& v)
+{
+  vec3 ret(v);
+  return ret*=d;
+}
+
+vec3 operator/(const real& d, const vec3& v)
+{
+  vec3 ret(v);
+  return ret/=d;
+}
+
+vec3 operator+(const real& d, const vec3& v)
+{
+  vec3 ret(v);
+  return ret+=d;
+}
+
+vec3 operator-(const real& d, const vec3& v)
+{
+  vec3 ret(v);
+  return ret-=d;
+}
+
