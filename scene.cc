@@ -24,7 +24,8 @@ void Scene::init(const std::string& path, int sx, int sy)
 Color Scene::render(int px, int py)
 {
   vec3 start = camera.position;
-  vec3 aim = start + camera.forward + (px - sizeX/2)/(real)sizeX*camera.left + (sizeY/2 - py)/(real)sizeY*camera.up;
+  const real s = std::min(sizeX, sizeY);
+  vec3 aim = start + camera.forward + (px - sizeX/2)/s*camera.left + (sizeY/2 - py)/s*camera.up;
   vec3 direction = (aim-start).normalize();
   return Scene::shade(start, direction);
 }
