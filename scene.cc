@@ -34,7 +34,6 @@ TraceResult Scene::trace(const vec3& start, const vec3& direction)
   TraceResult result;
   for ( ObjectList::const_iterator i = objects.begin(); i != objects.end(); ++i ) {
     TraceResult trace = (*i)->trace(start, direction);
-    // if ( trace < result ) result = trace;
     if ( trace > SMALL_NUMBER && trace < result ) result = trace;
   }
   return result;
@@ -52,12 +51,10 @@ Color Scene::shade(const vec3& start, const vec3& direction)
       const real dist = d.length();
       const vec3 v = d/dist;
       const real intensity = light.intensity/dist/dist;
-      if ( trace(result.position, v).distance > dist ) {
-	const real cosi = std::max(0.,v*result.normal);
-	if ( cosi > 0 ) {
-	  c += intensity*(material.diffuse*light.color*cosi +
-			  material.specular*light.color*(material.specularity + 2)/(2*M_PI)*std::pow(cosi, material.specularity));
-	}
+      const real cosi = std::max(0.,v*result.normal);
+      if ( cosi > 0 && trace(result.position, v).distance > dist ) {
+	c += intensity*(material.diffuse*light.color*cosi +
+			material.specular*light.color*(material.specularity + 2)/(2*M_PI)*std::pow(cosi, material.specularity));
       }
     }
     return c;
