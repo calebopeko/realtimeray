@@ -136,7 +136,7 @@ void Renderer::drawFrame()
 	Color c = scene.render(ix, iy);
 	Uint8* pixel = (Uint8*) screen->pixels + iy*screen->pitch + ix*screen->format->BytesPerPixel;
 	for ( int v=0; v<3; v++ ) {
-	  pixel[2-v] = (Uint8) (c[v]*255);
+	  pixel[2-v] = (Uint8) std::min(c[v]*255, 255.);
 	}
       }
     }
