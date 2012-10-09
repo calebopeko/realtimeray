@@ -6,7 +6,13 @@
 
 struct Material
 {
-  Color color;
+  Material() {}
+  
+  Material(const Value& v);
+
+  Color ambient, diffuse, specular;
+
+  real specularity;
 };
 
 #endif

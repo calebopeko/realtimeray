@@ -5,7 +5,7 @@ Plane::Plane(Value& v)
   position = vec3(v("position"));
   normal = vec3(v("normal"));
   d = -normal*position;
-  material.color = Color(v("color"));
+  material = Material(v("material"));
   console::out() << "Created plane with position=" << position << " and normal=" << normal << " (d=" << d << ")" << std::endl;
 }
 

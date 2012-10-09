@@ -5,35 +5,62 @@ objects = [
     type = plane;
     position = [0; -1; 0; ];
     normal = [0; 1; 0;];
-    color = [1.0; 0.0; 0.0;];
+    material = { 
+      ambient  = [0.1; 0.0; 0.0;];
+      diffuse  = [0.8; 0.0; 0.0;];
+      specular = [0.0; 0.0; 0.0;];
+      specularity = 32;
+    };
   };
 
   {
     type = plane;
     position = [0; 0; 10; ];
     normal = [0; 0; -1;];
-    color = [0.0; 1.0; 0.0;];
+    material = { 
+      ambient  = [0.0; 0.1; 0.0;];
+      diffuse  = [0.0; 0.8; 0.0;];
+      specular = [0.0; 0.0; 0.0;];
+      specularity = 32;
+    };
   };
 
   {
     type = sphere;
     center = [0; 0; 5; ];
     radius = 1;
-    color = [0.0; 0.0; 1.0;];
+    material = { 
+      ambient  = [0.0; 0.0; 0.1;];
+      diffuse  = [0.0; 0.0; 0.8;];
+      specular = [0.1; 0.1; 0.1;];
+      specularity = 128;
+    };
   };
 
   {
     type = sphere;
     center = [1; -0.75; 4.5; ];
     radius = 0.25;
-    color = [0.0; 1.0; 1.0;];
+    material = { 
+      ambient  = [0.0; 0.1; 0.1;];
+      diffuse  = [0.0; 0.8; 0.8;];
+      specular = [0.1; 0.1; 0.1;];
+      specularity = 128;
+    };
   };
 ];
 
 lights = [
   {
-    position = [0; 3; 3;];
+    position = [3; 3; 3;];
     color = [1.0; 1.0; 1.0;];
+    intensity = 10;
+  };
+
+  {
+    position = [6; 4; 7;];
+    color = [1.0; 1.0; 1.0;];
+    intensity = 10;
   };
 ];
 

@@ -16,6 +16,8 @@ public:
   vec3 position;
 
   Color color;
+
+  real intensity;
 };
 
 #endif

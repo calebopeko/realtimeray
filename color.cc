@@ -6,3 +6,28 @@ std::ostream& operator<<(std::ostream& s, const Color& v)
   return s;
 }
 
+
+Color operator*(const real& d, const Color& v)
+{
+  Color ret(v);
+  return ret*=d;
+}
+
+Color operator/(const real& d, const Color& v)
+{
+  Color ret(v);
+  return ret/=d;
+}
+
+Color operator+(const real& d, const Color& v)
+{
+  Color ret(v);
+  return ret+=d;
+}
+
+Color operator-(const real& d, const Color& v)
+{
+  Color ret(v);
+  return ret-=d;
+}
+

@@ -44,6 +44,11 @@ private:
   real data[3];
 };
 
+Color operator*(const real& d, const Color& v);
+Color operator/(const real& d, const Color& v);
+Color operator+(const real& d, const Color& v);
+Color operator-(const real& d, const Color& v);
+
 std::ostream& operator<<(std::ostream& s, const Color& v);
 
 #endif

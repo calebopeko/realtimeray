@@ -4,7 +4,7 @@ Sphere::Sphere(Value& v)
 { 
   center = vec3(v("center"));
   radius = v("radius");
-  material.color = Color(v("color"));
+  material = Material(v("material"));
   console::out() << "Created sphere with center=" << center << " and radius=" << radius << std::endl;
 }
 
