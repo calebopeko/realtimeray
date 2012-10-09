@@ -6,7 +6,7 @@ INC=
 SDLCONFIG_LIBS=$(shell sdl-config --libs)
 SDLCONFIG_CFLAGS=$(shell sdl-config --cflags)
 LIB=$(SDLCONFIG_LIBS) -lSDL_image -lSDL_ttf -llua5.1 -lreadline -lpthread
-CFLAGS=$(SDLCONFIG_CFLAGS) -g -Wall
+CFLAGS=$(SDLCONFIG_CFLAGS) -O3 -Wall
 
 $(CORE): $(OBJ)
 	$(CC) $(OBJ) $(LIB) -o $(CORE)

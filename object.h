@@ -4,12 +4,18 @@
 
 #include "tml.h"
 #include "console.h"
+#include "trace.h"
+#include "material.h"
 
 class Object
 {
 public:
 
   Object() {}
+
+  virtual TraceResult trace(const vec3& position, const vec3& direction) = 0;
+
+  virtual Material getMaterial(const vec3& position)  = 0;
 
 };
 

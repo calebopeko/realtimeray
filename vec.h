@@ -10,6 +10,8 @@
 
 typedef double real;
 
+const real LARGE_NUMBER = 1e10;
+
 class vec3
 {
 public:
@@ -22,25 +24,29 @@ public:
 
   vec3(const vec3& other) { data[0] = other.data[0]; data[1] = other.data[1]; data[2] = other.data[2]; }
 
-  const vec3& operator*=(const real& v) { for (int c=0; c<3; c++ ) data[c] *= v; return *this; }
-  const vec3& operator/=(const real& v) { for (int c=0; c<3; c++ ) data[c] /= v; return *this; }
-  const vec3& operator+=(const real& v) { for (int c=0; c<3; c++ ) data[c] += v; return *this; }
-  const vec3& operator-=(const real& v) { for (int c=0; c<3; c++ ) data[c] -= v; return *this; }
+  inline const vec3& operator*=(const real& v) { for (int c=0; c<3; c++ ) data[c] *= v; return *this; }
+  inline const vec3& operator/=(const real& v) { for (int c=0; c<3; c++ ) data[c] /= v; return *this; }
+  inline const vec3& operator+=(const real& v) { for (int c=0; c<3; c++ ) data[c] += v; return *this; }
+  inline const vec3& operator-=(const real& v) { for (int c=0; c<3; c++ ) data[c] -= v; return *this; }
 
-  const vec3& operator+=(const vec3& other) { for (int c=0; c<3; c++ ) data[c] += other.data[c]; return *this; }
-  const vec3& operator-=(const vec3& other) { for (int c=0; c<3; c++ ) data[c] -= other.data[c]; return *this; }
+  inline const vec3& operator+=(const vec3& other) { for (int c=0; c<3; c++ ) data[c] += other.data[c]; return *this; }
+  inline const vec3& operator-=(const vec3& other) { for (int c=0; c<3; c++ ) data[c] -= other.data[c]; return *this; }
 
-  vec3 operator*(const real& v) const { vec3 ret(*this); return ret*= v; }
-  vec3 operator/(const real& v) const { vec3 ret(*this); return ret/= v; }
-  vec3 operator+(const real& v) const { vec3 ret(*this); return ret+= v; }
-  vec3 operator-(const real& v) const { vec3 ret(*this); return ret-= v; }
+  inline vec3 operator*(const real& v) const { vec3 ret(*this); return ret*= v; }
+  inline vec3 operator/(const real& v) const { vec3 ret(*this); return ret/= v; }
+  inline vec3 operator+(const real& v) const { vec3 ret(*this); return ret+= v; }
+  inline vec3 operator-(const real& v) const { vec3 ret(*this); return ret-= v; }
+  inline vec3 operator-() const { return *this*(-1.0); }
 
-  vec3 operator+(const vec3& other) const { vec3 ret(*this); return ret+=other; }
-  vec3 operator-(const vec3& other) const { vec3 ret(*this); return ret-=other; }
+  inline vec3 operator+(const vec3& other) const { vec3 ret(*this); return ret+=other; }
+  inline vec3 operator-(const vec3& other) const { vec3 ret(*this); return ret-=other; }
 
-  real operator*(const vec3& other) { return data[0]*other.data[0]+data[1]*other.data[1]+data[2]*other.data[2]; }
+  inline real operator*(const vec3& other) const { return data[0]*other.data[0]+data[1]*other.data[1]+data[2]*other.data[2]; }
 
-  real length() { return std::sqrt(*this * *this); }
+  inline real length2() const { return (*this * *this); }
+  inline real length() const { return std::sqrt(length2()); }
+
+  inline vec3 normalize() { return *this/length(); }
 
   const real& operator[](int i) const { assert(i>=0 && i<3); return data[i]; }
   real& operator[](int i) { assert(i>=0 && i<3); return data[i]; }

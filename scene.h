@@ -8,6 +8,9 @@
 
 #include <list>
 
+typedef std::list<Object*> ObjectList;
+typedef std::list<Light*> LightList;
+
 class Scene
 {
 public:
@@ -24,9 +27,9 @@ private:
 
   Camera camera;
 
-  std::list<Object*> objects;
+  ObjectList objects;
 
-  std::list<Light*> lights;
+  LightList lights;
 };
 
 #endif

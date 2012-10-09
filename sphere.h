@@ -11,6 +11,10 @@ class Sphere
 public:
 
   Sphere(Value& v);
+  
+  virtual TraceResult trace(const vec3& position, const vec3& direction);
+
+  virtual Material getMaterial(const vec3& position) { return material; }
 
 private:
 
@@ -18,7 +22,8 @@ private:
 
   real radius;
 
-  Color color;
+  Material material;
+
 };
 
 class SphereBuilder

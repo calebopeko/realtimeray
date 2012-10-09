@@ -12,11 +12,17 @@ public:
 
   Plane(Value& v);
 
+  virtual TraceResult trace(const vec3& position, const vec3& direction);
+
+  virtual Material getMaterial(const vec3& position) { return material; }
+
 private:
 
   vec3 position, normal;
 
-  Color color;
+  real d;
+
+  Material material;
 };
 
 class PlaneBuilder

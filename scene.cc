@@ -23,7 +23,16 @@ void Scene::init(const std::string& path, int sx, int sy)
 
 Color Scene::shade(int px, int py)
 {
-  vec3 start = camera.position + (px - sizeX/2)*camera.left + (py - sizeY/2)*camera.up;
-  real frac = (start - camera.position).length() / std::sqrt(sizeX*sizeX + sizeY*sizeY);
-  return Color(frac, 0., 0.);
+  vec3 start = camera.position;
+  vec3 aim = start + camera.forward + (px - sizeX/2)/(real)sizeX*camera.left + (py - sizeY/2)/(real)sizeY*camera.up;
+  vec3 direction = (aim-start).normalize();
+  TraceResult result;
+  for ( ObjectList::const_iterator i = objects.begin(); i != objects.end(); ++i ) {
+    TraceResult trace = (*i)->trace(start, direction);
+    if ( trace < result ) result = trace;
+  }
+  if ( result.object ) {
+    return result.object->getMaterial(result.position).color;
+  }
+  return Color();
 }
