@@ -95,6 +95,12 @@ class Renderer
 
   void showFps(float fps);
 
+  void camForward(float v);
+
+  void camStrafe(float v);
+
+  void camYaw(float v);
+
  private:
 
   void initFrame();

@@ -85,7 +85,7 @@ void Renderer::PrintEngine::FontEngine::setColor(SDL_Color col)
 void Renderer::PrintEngine::FontEngine::printTextToSurface(std::string text, SDL_Surface* surface, int x, int y)
 {
   SDL_Rect dstrect; dstrect.x = x; dstrect.y = y;
-  SDL_Surface* text_surface;
+  SDL_Surface* text_surface = NULL;
  
   if (fontQuality == solid) {
     text_surface = TTF_RenderText_Solid(font, text.c_str(), color);
@@ -155,13 +155,17 @@ void Renderer::showFps(float fps)
   printEngine.setFps(fps);
 }
 
-// void Renderer::drawTile(VisuBlock& v)
-// {
-//   if ( v.block.material == Material_None ) return;
+void Renderer::camForward(float v)
+{
+  scene.camera.move(v);
+}
 
-//   SDL_Rect dstrect;
-//   dstrect.x = v.aabb.min[0] - WorldView::instance().center[0];
-//   dstrect.y = v.aabb.min[1] - WorldView::instance().center[1];
+void Renderer::camStrafe(float v)
+{
+  scene.camera.strafe(v);
+}
 
-//   SDL_BlitSurface(v.tile->surface, NULL, screen, &dstrect);
-// }
+void Renderer::camYaw(float v)
+{
+  scene.camera.yaw(v);
+}

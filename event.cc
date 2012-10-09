@@ -1,5 +1,6 @@
 #include "event.h"
 #include "console.h"
+#include "renderer.h"
 
 Event Event::instance_;
 
@@ -49,25 +50,27 @@ void Event::fillFrame()
   
 void Event::keyPressed()
 {
+  const real moveSpeed = 5.0;
+  const real rotSpeed = 1.0;
   // handle continuously pressed keys
-  // if ( keys[Key_CamXUp] ) {
-  //   renderer.panCamera(-5., -5., 0.);
-  // }
-  // if ( keys[Key_CamXDown] ) {
-  //   renderer.panCamera(5., 5., 0.);
-  // }
-  // if ( keys[Key_CamYUp] ) {
-  //   renderer.panCamera(5., -5., 0.);
-  // }
-  // if ( keys[Key_CamYDown] ) {
-  //   renderer.panCamera(-5., 5., 0.);
-  // }
-  // if ( keys[Key_CamZUp] ) {
-  //   renderer.panCamera(0., 0., -5.);
-  // }
-  // if ( keys[Key_CamZDown] ) {
-  //   renderer.panCamera(0., 0., 5.);
-  // }
+  if ( keys[Key_MoveForward] ) {
+    Renderer::instance().camForward(moveSpeed/fps);
+  }
+  if ( keys[Key_MoveBackward] ) {
+    Renderer::instance().camForward(-moveSpeed/fps);
+  }
+  if ( keys[Key_MoveLeft] ) {
+    Renderer::instance().camStrafe(-moveSpeed/fps);
+  }
+  if ( keys[Key_MoveRight] ) {
+    Renderer::instance().camStrafe(moveSpeed/fps);
+  }
+  if ( keys[Key_RotateLeft] ) {
+    Renderer::instance().camYaw(-rotSpeed/fps);
+  }
+  if ( keys[Key_RotateRight] ) {
+    Renderer::instance().camYaw(rotSpeed/fps);
+  }
 }
 
 void Event::keyUp(SDL_Event& ev)

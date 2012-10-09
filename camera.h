@@ -14,6 +14,12 @@ public:
 
   vec3 position, forward, up, left;
 
+  void move(real v);
+  
+  void strafe(real v);
+  
+  void yaw(real v);
+
 private:
 
 };

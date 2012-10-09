@@ -21,11 +21,11 @@ public:
 
   Color shade(int, int);
 
+  Camera camera;
+
 private:
 
   int sizeX, sizeY;
-
-  Camera camera;
 
   ObjectList objects;
 
