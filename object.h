@@ -24,6 +24,8 @@ class ObjectBuilder
 public:
 
   virtual Object* build(Value& v) = 0;
+
+  virtual ~ObjectBuilder() {}
 };
 
 class ObjectFactory
