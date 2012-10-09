@@ -13,8 +13,6 @@ public:
 
   Light(const Value& v);
 
-private:
-
   vec3 position;
 
   Color color;

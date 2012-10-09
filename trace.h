@@ -21,6 +21,9 @@ struct TraceResult
   Object* object;
 
   bool operator<(const TraceResult& other) { return distance < other.distance; }
+  bool operator>(const TraceResult& other) { return distance > other.distance; }
+  bool operator<(const real& other) { return distance < other; }
+  bool operator>(const real& other) { return distance > other; }
 };
 
 #endif

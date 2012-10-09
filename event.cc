@@ -13,6 +13,8 @@ void Event::init()
   keyMap[SDLK_s] = KeyDef(Key_MoveBackward, true);
   keyMap[SDLK_a] = KeyDef(Key_MoveLeft, true);
   keyMap[SDLK_d] = KeyDef(Key_MoveRight, true);
+  keyMap[SDLK_q] = KeyDef(Key_MoveUp, true);
+  keyMap[SDLK_e] = KeyDef(Key_MoveDown, true);
   keyMap[SDLK_LEFT] = KeyDef(Key_RotateLeft, true);
   keyMap[SDLK_RIGHT] = KeyDef(Key_RotateRight, true);
 
@@ -64,6 +66,12 @@ void Event::keyPressed()
   }
   if ( keys[Key_MoveRight] ) {
     Renderer::instance().camStrafe(moveSpeed/fps);
+  }
+  if ( keys[Key_MoveUp] ) {
+    Renderer::instance().camClimb(moveSpeed/fps);
+  }
+  if ( keys[Key_MoveDown] ) {
+    Renderer::instance().camClimb(-moveSpeed/fps);
   }
   if ( keys[Key_RotateLeft] ) {
     Renderer::instance().camYaw(-rotSpeed/fps);

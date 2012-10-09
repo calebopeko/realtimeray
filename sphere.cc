@@ -15,9 +15,9 @@ TraceResult Sphere::trace(const vec3& start, const vec3& direction)
   const real q = ((start - center)*(start - center) - radius*radius)/d2;
   const real radic = p*p - q;
   if ( radic < 0 ) return TraceResult();
-
-  const real dist1 = -p + std::sqrt(p*p-q);
-  const real dist2 = -p - std::sqrt(p*p-q);
+  const real sradic = std::sqrt(radic);
+  const real dist1 = -p + sradic;
+  const real dist2 = -p - sradic;
   
   const real distMin = std::min(dist1, dist2);
   const real distMax = std::max(dist1, dist2);
@@ -29,5 +29,5 @@ TraceResult Sphere::trace(const vec3& start, const vec3& direction)
   }
   const vec3 hit = start + distMax*direction;
   const vec3 normal = (hit-center).normalize();
-  return TraceResult(hit, normal, distMin, this);
+  return TraceResult(hit, normal, distMax, this);
 }

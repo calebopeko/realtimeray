@@ -133,7 +133,7 @@ void Renderer::drawFrame()
   if ( renderMode_ & Render_World ) {
     for ( int ix=0; ix < xSize; ++ix ) {
       for ( int iy=0; iy < ySize; ++iy ) {
-	Color c = scene.shade(ix, iy);
+	Color c = scene.render(ix, iy);
 	Uint8* pixel = (Uint8*) screen->pixels + iy*screen->pitch + ix*screen->format->BytesPerPixel;
 	for ( int v=0; v<3; v++ ) {
 	  pixel[2-v] = (Uint8) (c[v]*255);
@@ -158,6 +158,11 @@ void Renderer::showFps(float fps)
 void Renderer::camForward(float v)
 {
   scene.camera.move(v);
+}
+
+void Renderer::camClimb(float v)
+{
+  scene.camera.climb(v);
 }
 
 void Renderer::camStrafe(float v)

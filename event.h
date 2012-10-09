@@ -13,6 +13,8 @@ class Event
     Key_None=0,
     Key_MoveForward,
     Key_MoveBackward,
+    Key_MoveUp,
+    Key_MoveDown,
     Key_MoveLeft,
     Key_MoveRight,
     Key_RotateLeft,

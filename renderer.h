@@ -97,6 +97,8 @@ class Renderer
 
   void camForward(float v);
 
+  void camClimb(float v);
+
   void camStrafe(float v);
 
   void camYaw(float v);

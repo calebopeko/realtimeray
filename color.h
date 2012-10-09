@@ -17,6 +17,28 @@ public:
   const real& operator[](int i) const { assert(i>=0 && i<3); return data[i]; }
   real& operator[](int i) { assert(i>=0 && i<3); return data[i]; }
 
+  inline const Color& operator*=(const real& v) { for (int c=0; c<3; c++ ) data[c] *= v; return *this; }
+  inline const Color& operator/=(const real& v) { for (int c=0; c<3; c++ ) data[c] /= v; return *this; }
+  inline const Color& operator+=(const real& v) { for (int c=0; c<3; c++ ) data[c] += v; return *this; }
+  inline const Color& operator-=(const real& v) { for (int c=0; c<3; c++ ) data[c] -= v; return *this; }
+
+  inline const Color& operator*=(const Color& other) { for (int c=0; c<3; c++ ) data[c] *= other.data[c]; return *this; }
+
+  inline const Color& operator+=(const Color& other) { for (int c=0; c<3; c++ ) data[c] += other.data[c]; return *this; }
+  inline const Color& operator-=(const Color& other) { for (int c=0; c<3; c++ ) data[c] -= other.data[c]; return *this; }
+
+  inline Color operator*(const real& v) const { Color ret(*this); return ret*= v; }
+  inline Color operator/(const real& v) const { Color ret(*this); return ret/= v; }
+  inline Color operator+(const real& v) const { Color ret(*this); return ret+= v; }
+  inline Color operator-(const real& v) const { Color ret(*this); return ret-= v; }
+
+  inline Color operator*(const Color& other) const { Color ret(*this); return ret*=other; }
+
+  inline Color operator-() const { return *this*(-1.0); }
+
+  inline Color operator+(const Color& other) const { Color ret(*this); return ret+=other; }
+  inline Color operator-(const Color& other) const { Color ret(*this); return ret-=other; }
+
 private:
 
   real data[3];

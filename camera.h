@@ -16,6 +16,8 @@ public:
 
   void move(real v);
   
+  void climb(real v);
+  
   void strafe(real v);
   
   void yaw(real v);

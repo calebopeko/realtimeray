@@ -21,6 +21,11 @@ void Camera::strafe(real v)
   position += v*left;
 }
 
+void Camera::climb(real v)
+{
+  position += v*up;
+}
+
 void Camera::yaw(real v)
 {
   const real c = std::cos(v);
