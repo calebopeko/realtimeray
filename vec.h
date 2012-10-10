@@ -66,4 +66,6 @@ vec3 operator-(const real& d, const vec3& v);
 
 vec3 vec3_cross(const vec3& a, const vec3& b);
 
+vec3 vec3_rand(real max=1.0);
+
 #endif

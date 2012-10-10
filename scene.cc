@@ -21,16 +21,16 @@ void Scene::init(const std::string& path, int sx, int sy)
   camera = Camera(sceneFile("camera"));
 }
 
-Color Scene::render(int px, int py)
+Color Scene::render(int px, int py) const
 {
   vec3 start = camera.position;
   const real s = std::min(sizeX, sizeY);
-  vec3 aim = start + camera.forward + (px - sizeX/2)/s*camera.left + (sizeY/2 - py)/s*camera.up;
+  vec3 aim = start + camera.forward + (px - sizeX/2)/s*camera.left + (sizeY/2 - py)/s*camera.up + vec3_rand(1./s);
   vec3 direction = (aim-start).normalize();
   return Scene::shade(start, direction);
 }
 
-TraceResult Scene::trace(const vec3& start, const vec3& direction)
+TraceResult Scene::trace(const vec3& start, const vec3& direction) const
 {
   TraceResult result;
   for ( ObjectList::const_iterator i = objects.begin(); i != objects.end(); ++i ) {
@@ -40,7 +40,7 @@ TraceResult Scene::trace(const vec3& start, const vec3& direction)
   return result;
 }
 
-Color Scene::shade(const vec3& start, const vec3& direction)
+Color Scene::shade(const vec3& start, const vec3& direction) const
 {
   TraceResult result = trace(start, direction);
   if ( result.object ) {

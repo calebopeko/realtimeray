@@ -132,9 +132,10 @@ void Renderer::render()
 {
   for ( int ix=0; ix < xSize; ++ix ) {
     for ( int iy=0; iy < ySize; ++iy ) {
-      frame(ix,iy) = scene.render(ix, iy);
+      frame(ix,iy) += scene.render(ix, iy);
     }
   }
+  frame.samples++;
 }
 
 void Renderer::drawFrame()
@@ -145,7 +146,7 @@ void Renderer::drawFrame()
       for ( int iy=0; iy < ySize; ++iy ) {
 	Uint8* pixel = (Uint8*) screen->pixels + iy*screen->pitch + ix*screen->format->BytesPerPixel;
 	for ( int v=0; v<3; v++ ) {
-	  pixel[2-v] = (Uint8) std::min(frame(ix,iy)[v]*255, 255.);
+	  pixel[2-v] = (Uint8) std::min(frame(ix,iy)[v]/frame.samples*255, 255.);
 	}
       }
     }
@@ -155,7 +156,6 @@ void Renderer::drawFrame()
 
 void Renderer::initFrame()
 {
-  // frame.clear();
   SDL_Flip(screen);
   SDL_FillRect(screen, NULL, 0);
 }
@@ -168,19 +168,23 @@ void Renderer::showFps(float fps)
 void Renderer::camForward(float v)
 {
   scene.camera.move(v);
+  frame.clear();
 }
 
 void Renderer::camClimb(float v)
 {
   scene.camera.climb(v);
+  frame.clear();
 }
 
 void Renderer::camStrafe(float v)
 {
   scene.camera.strafe(v);
+  frame.clear();
 }
 
 void Renderer::camYaw(float v)
 {
   scene.camera.yaw(v);
+  frame.clear();
 }

@@ -19,11 +19,11 @@ public:
 
   void init(const std::string& path, int, int);
 
-  Color render(int, int);
+  Color render(int, int) const;
 
-  TraceResult trace(const vec3&, const vec3&);
+  TraceResult trace(const vec3&, const vec3&) const;
 
-  Color shade(const vec3&, const vec3&);
+  Color shade(const vec3&, const vec3&) const;
 
   Camera camera;
 
