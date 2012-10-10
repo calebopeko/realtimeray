@@ -3,6 +3,7 @@
 
 #include "draw.h"
 #include "scene.h"
+#include "vec.h"
 
 #include <string>
 #include <list>
@@ -10,6 +11,32 @@
 const int Render_None = 0;
 const int Render_Print = 0x01;
 const int Render_World = 0x02;
+
+class Frame
+{
+public:
+
+  Frame()
+    : sizeX(0), sizeY(0), data_(NULL), samples(0) {}
+
+  Frame(int sx, int sy)
+    : sizeX(sx), sizeY(sy), data_(NULL), samples(0) { allocate(sx, sy); }
+
+  ~Frame() { if ( data_ ) delete[] data_; }
+
+  void allocate(int sx, int sy) { sizeX=sx; sizeY=sy; data_ = new Color[sx*sy]; }
+
+  void clear() { for (int i=0; i<sizeX*sizeY; ++i) data_[i]=Color(); samples=0; }
+
+  Color& operator()(int ix, int iy) { return data_[ix+sizeX*iy]; }
+  const Color& operator()(int ix, int iy) const { return data_[ix+sizeX*iy]; }
+
+  int sizeX, sizeY;
+
+  Color* data_;
+
+  unsigned int samples;
+};
 
 class Renderer
 {
@@ -87,6 +114,8 @@ class Renderer
 
   void drawFrame();
 
+  void render();
+
   void setRenderMode(int m) { renderMode_ = m; }
 
   int& renderMode() { return renderMode_; }
@@ -122,6 +151,8 @@ class Renderer
   Scene scene;
 
   SDL_Surface* screen;
+
+  Frame frame;
 };
 
 #endif

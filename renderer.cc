@@ -124,7 +124,17 @@ void Renderer::init(int xsize, int ysize, int bpp, int fontsize, const std::stri
   }
   printEngine.init(std::string("FreeMono.ttf"), fontsize, screen);
   scene.init(scenefile, xsize, ysize);
+  frame.allocate(xsize, ysize);
   renderMode_ = Render_Print | Render_World;
+}
+
+void Renderer::render()
+{
+  for ( int ix=0; ix < xSize; ++ix ) {
+    for ( int iy=0; iy < ySize; ++iy ) {
+      frame(ix,iy) = scene.render(ix, iy);
+    }
+  }
 }
 
 void Renderer::drawFrame()
@@ -133,10 +143,9 @@ void Renderer::drawFrame()
   if ( renderMode_ & Render_World ) {
     for ( int ix=0; ix < xSize; ++ix ) {
       for ( int iy=0; iy < ySize; ++iy ) {
-	Color c = scene.render(ix, iy);
 	Uint8* pixel = (Uint8*) screen->pixels + iy*screen->pitch + ix*screen->format->BytesPerPixel;
 	for ( int v=0; v<3; v++ ) {
-	  pixel[2-v] = (Uint8) std::min(c[v]*255, 255.);
+	  pixel[2-v] = (Uint8) std::min(frame(ix,iy)[v]*255, 255.);
 	}
       }
     }
@@ -146,6 +155,7 @@ void Renderer::drawFrame()
 
 void Renderer::initFrame()
 {
+  // frame.clear();
   SDL_Flip(screen);
   SDL_FillRect(screen, NULL, 0);
 }

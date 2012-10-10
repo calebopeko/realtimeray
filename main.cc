@@ -15,6 +15,7 @@ int main(int argc, char** argv)
   renderer.init(options.sizeX, options.sizeY, 32, 20, options.sceneFile);
 
   while (event.poll()) {
+    renderer.render();
     renderer.drawFrame();
     event.fillFrame();
     if ( event.diag(1000) ) { // every second
