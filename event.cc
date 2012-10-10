@@ -15,6 +15,7 @@ void Event::init()
   keyMap[SDLK_d] = KeyDef(Key_MoveRight, true);
   keyMap[SDLK_q] = KeyDef(Key_MoveUp, true);
   keyMap[SDLK_e] = KeyDef(Key_MoveDown, true);
+  keyMap[SDLK_c] = KeyDef(Key_Clear, false);
   keyMap[SDLK_LEFT] = KeyDef(Key_RotateLeft, true);
   keyMap[SDLK_RIGHT] = KeyDef(Key_RotateRight, true);
 
@@ -113,6 +114,9 @@ void Event::keySingleDown(KeyIndex key)
   switch (key) {
   case Key_Quit:
     running = false;
+    break;
+  case Key_Clear:
+    Renderer::instance().clearFrame();
     break;
   default:
     break;

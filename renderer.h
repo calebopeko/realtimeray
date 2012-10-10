@@ -16,28 +16,36 @@ class Frame
 {
 public:
 
+  enum FrameStatus {
+    Approx,
+    Sample
+  };
+
   Frame()
-    : sizeX(0), sizeY(0), data_(NULL), samples(0) {}
+    : sizeX(0), sizeY(0), data_(NULL), samples_(NULL), status(Approx) {}
 
   Frame(int sx, int sy)
-    : sizeX(sx), sizeY(sy), data_(NULL), samples(0) { allocate(sx, sy); }
+    : sizeX(sx), sizeY(sy), data_(NULL), samples_(NULL), status(Approx) { allocate(sx, sy); }
 
-  ~Frame() { if ( data_ ) delete[] data_; }
+  ~Frame() { if ( data_ ) { delete[] data_; delete[] samples_; } }
 
-  void allocate(int sx, int sy) { sizeX=sx; sizeY=sy; data_ = new Color[sx*sy]; }
+  void allocate(int sx, int sy) { sizeX=sx; sizeY=sy; data_ = new Color[sx*sy]; samples_ = new unsigned int[sx*sy]; }
 
-  void reset() { samples = 0; }
-
-  void clear() { for (int i=0; i<sizeX*sizeY; ++i) data_[i]=Color(); reset(); }
+  void clear() { for (int i=0; i<sizeX*sizeY; ++i) { data_[i]=Color(); samples_[i] = 0; } }
 
   Color& operator()(int ix, int iy) { return data_[ix+sizeX*iy]; }
   const Color& operator()(int ix, int iy) const { return data_[ix+sizeX*iy]; }
+
+  unsigned int& samples(int ix, int iy) { return samples_[ix+sizeX*iy]; }
+  const unsigned int& samples(int ix, int iy) const { return samples_[ix+sizeX*iy]; }
 
   int sizeX, sizeY;
 
   Color* data_;
 
-  unsigned int samples;
+  unsigned int* samples_;
+
+  FrameStatus status;
 };
 
 class Renderer
@@ -133,6 +141,8 @@ class Renderer
   void camStrafe(float v);
 
   void camYaw(float v);
+
+  void clearFrame() { frame.clear(); }
 
  private:
 

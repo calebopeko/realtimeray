@@ -131,37 +131,79 @@ void Renderer::init(int xsize, int ysize, int bpp, int fontsize, int bs, const s
 
 void Renderer::render()
 {
-  if ( frame.samples == 0 ) {
+  if ( frame.status == Frame::Approx ) {
     for ( int ix=0; ix < xSize-blocksize+1; ix+=blocksize ) {
       for ( int iy=0; iy < ySize-blocksize+1; iy+=blocksize ) {
 	Color c = scene.render(ix+blocksize/2, iy+blocksize/2, vec3());
 	for ( int jx=0; jx<blocksize; jx++ ) {
 	  for ( int jy=0; jy<blocksize; jy++ ) {
 	    frame(ix+jx,iy+jy) = c;
+	    frame.samples(ix+jx,iy+jy) = 1;
 	  }
 	}
       }
     }
-  } else {
+  } else if ( frame.status == Frame::Sample ) {
     const vec3 r = vec3_rand(1./std::min(xSize, ySize));
-    for ( int ix=0; ix < xSize; ++ix ) {
-      for ( int iy=0; iy < ySize; ++iy ) {
+
+    const int cols=8;
+    const int col = rand() % cols;
+    const int rows=8;
+    const int row = rand() % cols;
+    for ( int iy=row*(ySize/rows); iy < (row+1)*ySize/rows; ++iy ) {
+      for ( int ix=col*(xSize/cols); ix < (col+1)*xSize/cols; ++ix ) {
 	frame(ix,iy) += scene.render(ix, iy, r);
+	frame.samples(ix,iy)++;
       }
     }
+
+    // random:
+    // for ( int i=0; i<1e5; i++ ) {
+    //   int ix = rand() % xSize;
+    //   int iy = rand() % ySize;
+    //   frame(ix,iy) += scene.render(ix, iy, r);
+    //   frame.samples(ix,iy)++;
+    // }
+
+    // every:
+    // for ( int ix=0; ix < xSize; ++ix ) {
+    //   for ( int iy=0; iy < ySize; ++iy ) {
+    // 	if ( frame.samples(ix,iy) == 0 ) {
+    // 	  frame(ix,iy) = scene.render(ix, iy, r);
+    // 	  frame.samples(ix,iy) = 1;
+    // 	} else {
+    // 	  frame(ix,iy) += scene.render(ix, iy, r);
+    // 	  frame.samples(ix,iy)++;
+    // 	}
+    //   }
+    // }
+
+
   }
-  frame.samples++;
 }
 
 void Renderer::drawFrame()
 {
   initFrame();
   if ( renderMode_ & Render_World ) {
-    for ( int ix=0; ix < xSize; ++ix ) {
+    if ( frame.status == Frame::Approx ) {
       for ( int iy=0; iy < ySize; ++iy ) {
-	Uint8* pixel = (Uint8*) screen->pixels + iy*screen->pitch + ix*screen->format->BytesPerPixel;
-	for ( int v=0; v<3; v++ ) {
-	  pixel[2-v] = (Uint8) std::min(frame(ix,iy)[v]/frame.samples*255, 255.);
+	for ( int ix=0; ix < xSize; ++ix ) {
+	  Uint8* pixel = (Uint8*) screen->pixels + iy*screen->pitch + ix*screen->format->BytesPerPixel;
+	  for ( int v=0; v<3; v++ ) {
+	    pixel[2-v] = (Uint8) std::min(frame(ix,iy)[v]*255, 255.);
+	  }
+	}
+      }
+      frame.status = Frame::Sample;
+    } else if ( frame.status == Frame::Sample ) {
+      for ( int iy=0; iy < ySize; ++iy ) {
+	for ( int ix=0; ix < xSize; ++ix ) {
+	  Uint8* pixel = (Uint8*) screen->pixels + iy*screen->pitch + ix*screen->format->BytesPerPixel;
+	  for ( int v=0; v<3; v++ ) {
+	    // pixel[2-v] = (Uint8) std::min(frame(ix,iy)[v]/frame.samples(ix,iy)*255, 255.);
+	    pixel[2-v] = (Uint8) std::min(frame(ix,iy)[v]/std::max(frame.samples(ix,iy),(unsigned int)1)*255, 255.);
+	  }
 	}
       }
     }
@@ -183,23 +225,23 @@ void Renderer::showFps(float fps)
 void Renderer::camForward(float v)
 {
   scene.camera.move(v);
-  frame.reset();
+  frame.status = Frame::Approx;
 }
 
 void Renderer::camClimb(float v)
 {
   scene.camera.climb(v);
-  frame.reset();
+  frame.status = Frame::Approx;
 }
 
 void Renderer::camStrafe(float v)
 {
   scene.camera.strafe(v);
-  frame.reset();
+  frame.status = Frame::Approx;
 }
 
 void Renderer::camYaw(float v)
 {
   scene.camera.yaw(v);
-  frame.reset();
+  frame.status = Frame::Approx;
 }

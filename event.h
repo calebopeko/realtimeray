@@ -19,6 +19,8 @@ class Event
     Key_MoveRight,
     Key_RotateLeft,
     Key_RotateRight,
+
+    Key_Clear,
     
     Key_Quit,
     Key_Total // <- last
