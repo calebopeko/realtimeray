@@ -130,9 +130,10 @@ void Renderer::init(int xsize, int ysize, int bpp, int fontsize, const std::stri
 
 void Renderer::render()
 {
+  const vec3 r = vec3_rand(1./std::min(xSize, ySize));
   for ( int ix=0; ix < xSize; ++ix ) {
     for ( int iy=0; iy < ySize; ++iy ) {
-      frame(ix,iy) += scene.render(ix, iy);
+      frame(ix,iy) += scene.render(ix, iy, r);
     }
   }
   frame.samples++;

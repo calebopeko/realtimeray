@@ -21,11 +21,11 @@ void Scene::init(const std::string& path, int sx, int sy)
   camera = Camera(sceneFile("camera"));
 }
 
-Color Scene::render(int px, int py) const
+Color Scene::render(int px, int py, const vec3& r) const
 {
   vec3 start = camera.position;
   const real s = std::min(sizeX, sizeY);
-  vec3 aim = start + camera.forward + (px - sizeX/2)/s*camera.left + (sizeY/2 - py)/s*camera.up + vec3_rand(1./s);
+  vec3 aim = start + camera.forward + (px - sizeX/2)/s*camera.left + (sizeY/2 - py)/s*camera.up + r;
   vec3 direction = (aim-start).normalize();
   return Scene::shade(start, direction);
 }

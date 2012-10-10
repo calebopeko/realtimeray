@@ -19,7 +19,7 @@ public:
 
   void init(const std::string& path, int, int);
 
-  Color render(int, int) const;
+  Color render(int, int, const vec3&) const;
 
   TraceResult trace(const vec3&, const vec3&) const;
 
