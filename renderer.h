@@ -26,7 +26,9 @@ public:
 
   void allocate(int sx, int sy) { sizeX=sx; sizeY=sy; data_ = new Color[sx*sy]; }
 
-  void clear() { for (int i=0; i<sizeX*sizeY; ++i) data_[i]=Color(); samples=0; }
+  void reset() { samples = 0; }
+
+  void clear() { for (int i=0; i<sizeX*sizeY; ++i) data_[i]=Color(); reset(); }
 
   Color& operator()(int ix, int iy) { return data_[ix+sizeX*iy]; }
   const Color& operator()(int ix, int iy) const { return data_[ix+sizeX*iy]; }
@@ -110,7 +112,7 @@ class Renderer
   Renderer() 
     : xSize(-1), ySize(-1), renderMode_(Render_Print) {}
 
-  void init(int, int, int, int, const std::string& scenefile);
+  void init(int, int, int, int, int, const std::string& scenefile);
 
   void drawFrame();
 
@@ -143,6 +145,8 @@ class Renderer
   int xSize;
     
   int ySize;
+
+  int blocksize;
 
   int renderMode_;
     

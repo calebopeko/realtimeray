@@ -8,7 +8,7 @@
 Options Options::instance_;
 
 Options::Options()
-  : sizeX(128), sizeY(128), sceneFile("scene.tml")
+  : sizeX(128), sizeY(128), blocksize(1), sceneFile("scene.tml")
 {}
 
 void Options::set(int argc, char** argv)
@@ -39,6 +39,9 @@ void Options::setArgument(const std::string& argname, const std::string& arg)
   } else if ( argname == "y" || argname == "sizey" || argname == "sizeY" ) {
     std::stringstream s(arg);
     s >> sizeY;
+  } else if ( argname == "blocksize" || argname == "block" ) {
+    std::stringstream s(arg);
+    s >> blocksize;
   } else if ( argname == "scenefile" || argname == "scene" || argname == "sceneFile" ) {
     sceneFile = arg;
   } else if ( argname == "help" || argname == "?" ) {
@@ -65,6 +68,7 @@ void Options::printUsage()
 		 << "Options:" << std::endl
 		 << " --sizeX <resolution>          Set resolution in x-direction to <resolution>. Default is 128." << std::endl
 		 << " --sizeY <resolution>          Set resolution in y-direction to <resolution>. Default is 128." << std::endl
+		 << " --blocksize <resolution>      Set blocksize to <resolution> for rendering in movement. Default is 1." << std::endl
 		 << " --sceneFile <file>            Set scenefile to <file>. Default is 'scene.tml'" << std::endl
     ;
   exit(1);

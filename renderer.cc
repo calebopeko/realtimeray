@@ -113,11 +113,12 @@ void Renderer::PrintEngine::FontEngine::textSize(std::string text, int* w, int* 
   }
 }
 
-void Renderer::init(int xsize, int ysize, int bpp, int fontsize, const std::string& scenefile)
+void Renderer::init(int xsize, int ysize, int bpp, int fontsize, int bs, const std::string& scenefile)
 {
   // screen = SDL_SetVideoMode(xsize, ysize, bpp, SDL_SWSURFACE | SDL_FULLSCREEN);
   screen = SDL_SetVideoMode(xsize, ysize, bpp, SDL_SWSURFACE);
   xSize = xsize; ySize = ysize;
+  blocksize = bs;
   if (screen == NULL) {
     console::err() << "Unable to set the video mode." << std::endl;
     exit(1);
@@ -130,10 +131,23 @@ void Renderer::init(int xsize, int ysize, int bpp, int fontsize, const std::stri
 
 void Renderer::render()
 {
-  const vec3 r = vec3_rand(1./std::min(xSize, ySize));
-  for ( int ix=0; ix < xSize; ++ix ) {
-    for ( int iy=0; iy < ySize; ++iy ) {
-      frame(ix,iy) += scene.render(ix, iy, r);
+  if ( frame.samples == 0 ) {
+    for ( int ix=0; ix < xSize-blocksize+1; ix+=blocksize ) {
+      for ( int iy=0; iy < ySize-blocksize+1; iy+=blocksize ) {
+	Color c = scene.render(ix+blocksize/2, iy+blocksize/2, vec3());
+	for ( int jx=0; jx<blocksize; jx++ ) {
+	  for ( int jy=0; jy<blocksize; jy++ ) {
+	    frame(ix+jx,iy+jy) = c;
+	  }
+	}
+      }
+    }
+  } else {
+    const vec3 r = vec3_rand(1./std::min(xSize, ySize));
+    for ( int ix=0; ix < xSize; ++ix ) {
+      for ( int iy=0; iy < ySize; ++iy ) {
+	frame(ix,iy) += scene.render(ix, iy, r);
+      }
     }
   }
   frame.samples++;
@@ -169,23 +183,23 @@ void Renderer::showFps(float fps)
 void Renderer::camForward(float v)
 {
   scene.camera.move(v);
-  frame.clear();
+  frame.reset();
 }
 
 void Renderer::camClimb(float v)
 {
   scene.camera.climb(v);
-  frame.clear();
+  frame.reset();
 }
 
 void Renderer::camStrafe(float v)
 {
   scene.camera.strafe(v);
-  frame.clear();
+  frame.reset();
 }
 
 void Renderer::camYaw(float v)
 {
   scene.camera.yaw(v);
-  frame.clear();
+  frame.reset();
 }

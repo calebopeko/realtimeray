@@ -15,6 +15,8 @@ class Options
 
   int sizeX, sizeY;
 
+  int blocksize;
+
   std::string sceneFile;
 
  private:

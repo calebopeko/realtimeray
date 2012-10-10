@@ -12,7 +12,7 @@ int main(int argc, char** argv)
   Renderer& renderer = Renderer::instance();
 
   event.init();
-  renderer.init(options.sizeX, options.sizeY, 32, 20, options.sceneFile);
+  renderer.init(options.sizeX, options.sizeY, 32, 20, options.blocksize, options.sceneFile);
 
   while (event.poll()) {
     renderer.render();
