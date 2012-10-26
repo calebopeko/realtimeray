@@ -46,9 +46,10 @@ Color Scene::shade(const vec3& start, const vec3& direction) const
   if ( result.object ) {
     Material material = result.object->getMaterial(result.position);
     Color c = material.ambient;
+    const vec3 r = vec3_rand(1.0);
     for ( LightList::const_iterator i = lights.begin(); i != lights.end(); ++i ) {
       Light& light = **i;
-      const vec3 d = light.position - result.position;
+      const vec3 d = light.position + r - result.position;
       const real dist = d.length();
       const vec3 v = d/dist;
       const real intensity = light.intensity/dist/dist;
