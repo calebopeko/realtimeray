@@ -8,7 +8,7 @@
 Options Options::instance_;
 
 Options::Options()
-  : sizeX(128), sizeY(128), blocksize(1), sceneFile("scene.tml")
+  : sizeX(640), sizeY(480), blocksize(4), sceneFile("scene.tml")
 {}
 
 void Options::set(int argc, char** argv)

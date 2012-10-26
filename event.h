@@ -20,6 +20,7 @@ class Event
     Key_RotateLeft,
     Key_RotateRight,
 
+    Key_Screenshot,
     Key_Clear,
     
     Key_Quit,

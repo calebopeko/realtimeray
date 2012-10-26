@@ -144,6 +144,10 @@ class Renderer
 
   void clearFrame() { frame.clear(); }
 
+  void screenshot(const std::string& filename);
+
+  void save(SDL_Surface* surf, const std::string& filename);
+
  private:
 
   void initFrame();

@@ -15,9 +15,11 @@ void Event::init()
   keyMap[SDLK_d] = KeyDef(Key_MoveRight, true);
   keyMap[SDLK_q] = KeyDef(Key_MoveUp, true);
   keyMap[SDLK_e] = KeyDef(Key_MoveDown, true);
-  keyMap[SDLK_c] = KeyDef(Key_Clear, false);
   keyMap[SDLK_LEFT] = KeyDef(Key_RotateLeft, true);
   keyMap[SDLK_RIGHT] = KeyDef(Key_RotateRight, true);
+
+  keyMap[SDLK_c] = KeyDef(Key_Clear, false);
+  keyMap[SDLK_p] = KeyDef(Key_Screenshot, false);
 
   keyMap[SDLK_ESCAPE] = KeyDef(Key_Quit, false);
 
@@ -117,6 +119,9 @@ void Event::keySingleDown(KeyIndex key)
     break;
   case Key_Clear:
     Renderer::instance().clearFrame();
+    break;
+  case Key_Screenshot:
+    Renderer::instance().screenshot("screenshot.png");
     break;
   default:
     break;

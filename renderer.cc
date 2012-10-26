@@ -2,6 +2,7 @@
 #include "event.h"
 #include "console.h"
 
+#include <png.h>
 #include <sstream>
 #include <iostream>
 
@@ -244,4 +245,71 @@ void Renderer::camYaw(float v)
 {
   scene.camera.yaw(v);
   frame.status = Frame::Approx;
+}
+
+void Renderer::screenshot(const std::string& filename)
+{
+  save(screen, filename);
+  console::out() << "Screenshot saved to " << filename << std::endl;
+}
+
+void Renderer::save(SDL_Surface* surf, const std::string& filename)
+{
+  Uint32 rmask, gmask, bmask, amask;
+#if SDL_BYTEORDER == SDL_BIG_ENDIAN
+  rmask = 0xff000000; gmask = 0x00ff0000; bmask = 0x0000ff00; amask = 0x000000ff;
+#else
+  rmask = 0x000000ff; gmask = 0x0000ff00; bmask = 0x00ff0000; amask = 0xff000000;
+#endif
+  SDL_Surface* output_surf = SDL_CreateRGBSurface(surf->flags, surf->w, surf->h, 
+						  surf->format->BitsPerPixel, rmask, gmask, bmask, 
+						  surf->format->BitsPerPixel<=24?0:amask);
+  SDL_BlitSurface(surf, NULL, output_surf, NULL);
+
+  png_structp png_ptr = png_create_write_struct(PNG_LIBPNG_VER_STRING, 
+						NULL, NULL, NULL);
+  if (png_ptr == NULL) {
+    console::err() << "png_create_write_struct error! (" << filename << ")" << std::endl;
+    return;
+  }
+
+  png_infop info_ptr = png_create_info_struct(png_ptr);
+  if (info_ptr == NULL) {
+    png_destroy_write_struct(&png_ptr, (png_infopp)NULL);
+    console::err() << "png_create_info_struct error! (" << filename << ")" << std::endl;
+    return;
+  }
+
+  if (setjmp(png_jmpbuf(png_ptr))) {
+    png_destroy_write_struct(&png_ptr, &info_ptr);
+    console::err() << "setjmp error! (" << filename << ")" << std::endl;
+    return;
+  }
+
+  FILE* file = fopen(filename.c_str(), "wb");
+  if ( !file ) {
+    console::err() << "Error opening file " << filename << std::endl;
+    return;
+  }
+
+  png_init_io(png_ptr, file);
+
+  png_set_IHDR(png_ptr, info_ptr, output_surf->w, output_surf->h, 8, PNG_COLOR_TYPE_RGB, PNG_INTERLACE_NONE, 
+	       PNG_COMPRESSION_TYPE_DEFAULT, PNG_FILTER_TYPE_DEFAULT);
+
+  png_write_info(png_ptr, info_ptr);
+  png_set_packing(png_ptr);
+
+  png_bytep* row_pointers = new png_bytep[sizeof(png_bytep)*output_surf->h];
+  for (int i = 0; i < output_surf->h; ++i) {
+    row_pointers[i] = (png_bytep)(Uint8 *)output_surf->pixels + i*output_surf->pitch;
+  }
+
+  png_write_image(png_ptr, row_pointers);
+  png_write_end(png_ptr, info_ptr);
+
+  delete[] row_pointers;
+  png_destroy_write_struct(&png_ptr, &info_ptr);
+  fclose(file);
+  SDL_FreeSurface(output_surf);
 }

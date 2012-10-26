@@ -46,14 +46,17 @@ Color Scene::shade(const vec3& start, const vec3& direction) const
   if ( result.object ) {
     Material material = result.object->getMaterial(result.position);
     Color c = material.ambient;
+
+    vec3 random = vec3_rand(1.0);
+  
     for ( LightList::const_iterator i = lights.begin(); i != lights.end(); ++i ) {
       Light& light = **i;
-      const vec3 d = light.position - result.position;
+      const vec3 d = light.position + random - result.position;
       const real dist = d.length();
       const vec3 v = d/dist;
-      const real intensity = light.intensity/dist/dist;
       const real cosi = std::max(0.,v*result.normal);
       if ( cosi > 0 && trace(result.position, v).distance > dist ) {
+     const real intensity = light.intensity/dist/dist;
 	c += intensity*(material.diffuse*light.color*cosi +
 			material.specular*light.color*(material.specularity + 2)/(2*M_PI)*std::pow(cosi, material.specularity));
       }
