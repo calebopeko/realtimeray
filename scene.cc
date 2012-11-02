@@ -54,12 +54,12 @@ Color Scene::shade(const vec3& start, const vec3& direction) const
       const vec3 v = d/dist;
       const real cosi = std::max(0.,v*result.normal);
       if ( cosi > 0 && trace(result.position, v).distance > dist ) {
-     const real intensity = light.intensity/dist/dist;
+	const real intensity = light.intensity/dist/dist;
 	c += intensity*(material.diffuse*light.color*cosi +
 			material.specular*light.color*(material.specularity + 2)/(2*M_PI)*std::pow(cosi, material.specularity));
-	if ( !material.reflect.isZero() ) {
-	  c += material.reflect*shade( result.position, direction.reflect(result.normal) );
-	}
+      }
+      if ( !material.reflect.isZero() ) {
+	c += material.reflect*shade( result.position, direction.reflect(result.normal) );
       }
     }
     return c;
