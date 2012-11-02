@@ -9,6 +9,7 @@ objects = [
       ambient  = [0.1; 0.1; 0.1;];
       diffuse  = [0.8; 0.8; 0.8;];
       specular = [0.0; 0.0; 0.0;];
+      reflect = [0.0; 0.0; 0.0;];
       specularity = 32;
     };
   };
@@ -21,6 +22,59 @@ objects = [
       ambient  = [0.1; 0.1; 0.1;];
       diffuse  = [0.8; 0.8; 0.8;];
       specular = [0.0; 0.0; 0.0;];
+      reflect = [0.0; 0.0; 0.0;];
+      specularity = 32;
+    };
+  };
+
+  {
+    type = plane;
+    position = [0; 0; -10; ];
+    normal = [0; 0; 1;];
+    material = { 
+      ambient  = [0.1; 0.1; 0.1;];
+      diffuse  = [0.8; 0.8; 0.8;];
+      specular = [0.0; 0.0; 0.0;];
+      reflect = [0.0; 0.0; 0.0;];
+      specularity = 32;
+    };
+  };
+
+  {
+    type = plane;
+    position = [10; 0; 0; ];
+    normal = [-1; 0; 0;];
+    material = { 
+      ambient  = [0.0; 0.1; 0.1;];
+      diffuse  = [0.0; 0.8; 0.8;];
+      specular = [0.0; 0.0; 0.0;];
+      reflect = [0.0; 0.0; 0.0;];
+      specularity = 32;
+    };
+  };
+
+  {
+    type = plane;
+    position = [-10; 0; 0; ];
+    normal = [1; 0; 0;];
+    material = { 
+      ambient  = [0.1; 0.1; 0.0;];
+      diffuse  = [0.8; 0.8; 0.0;];
+      specular = [0.0; 0.0; 0.0;];
+      reflect = [0.0; 0.0; 0.0;];
+      specularity = 32;
+    };
+  };
+
+  {
+    type = plane;
+    position = [0; 10; 0; ];
+    normal = [0; -1; 0;];
+    material = { 
+      ambient  = [0.1; 0.1; 0.1;];
+      diffuse  = [0.8; 0.8; 0.8;];
+      specular = [0.0; 0.0; 0.0;];
+      reflect = [0.0; 0.0; 0.0;];
       specularity = 32;
     };
   };
@@ -30,9 +84,10 @@ objects = [
     center = [0; 0; 8; ];
     radius = 1;
     material = { 
-      ambient  = [0.0; 0.0; 0.1;];
-      diffuse  = [0.0; 0.0; 0.8;];
+      ambient  = [0.0; 0.0; 0.0;];
+      diffuse  = [0.1; 0.1; 0.1;];
       specular = [0.1; 0.1; 0.1;];
+      reflect = [0.8; 0.8; 0.8;];
       specularity = 128;
     };
   };
@@ -45,6 +100,7 @@ objects = [
       ambient  = [0.0; 0.1; 0.1;];
       diffuse  = [0.0; 0.8; 0.8;];
       specular = [0.1; 0.1; 0.1;];
+      reflect = [0.0; 0.0; 0.0;];
       specularity = 128;
     };
   };
@@ -54,9 +110,10 @@ objects = [
     center = [-1; -0.75; 7.75; ];
     radius = 0.25;
     material = { 
-      ambient  = [0.1; 0.1; 0.0;];
-      diffuse  = [0.8; 0.8; 0.0;];
+      ambient  = [0.0; 0.0; 0.0;];
+      diffuse  = [0.1; 0.1; 0.1;];
       specular = [0.1; 0.1; 0.1;];
+      reflect = [0.8; 0.8; 0.8;];
       specularity = 128;
     };
   };

@@ -39,6 +39,8 @@ public:
   inline Color operator+(const Color& other) const { Color ret(*this); return ret+=other; }
   inline Color operator-(const Color& other) const { Color ret(*this); return ret-=other; }
 
+  inline bool isZero() const { return data[0] == 0.0 && data[1] == 0.0 && data[2] == 0.0; }
+
 private:
 
   real data[3];

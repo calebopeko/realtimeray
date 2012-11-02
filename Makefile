@@ -1,4 +1,5 @@
-CC=g++
+CC=clang
+LINKER=g++
 SRC=$(shell ls *.cc)
 OBJ=$(SRC:%.cc=%.o)
 CORE=rtr
@@ -9,7 +10,7 @@ LIB=$(SDLCONFIG_LIBS) -lSDL_image -lSDL_ttf -lpng
 CFLAGS=$(SDLCONFIG_CFLAGS) -g -O3 -Wall
 
 $(CORE): $(OBJ)
-	$(CC) $(OBJ) $(LIB) -o $(CORE)
+	$(LINKER) $(OBJ) $(LIB) -o $(CORE)
 
 $(OBJ): %.o: %.cc
 	$(CC) $(INC) $(CFLAGS) -c $<

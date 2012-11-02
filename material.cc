@@ -7,4 +7,5 @@ Material::Material(const Value& v)
   diffuse = Color(v("diffuse"));
   specular = Color(v("specular"));
   specularity = v("specularity");
+  reflect = Color(v("reflect"));
 }

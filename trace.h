@@ -20,10 +20,10 @@ struct TraceResult
 
   Object* object;
 
-  bool operator<(const TraceResult& other) { return distance < other.distance; }
-  bool operator>(const TraceResult& other) { return distance > other.distance; }
-  bool operator<(const real& other) { return distance < other; }
-  bool operator>(const real& other) { return distance > other; }
+  inline bool operator<(const TraceResult& other) const { return distance < other.distance; }
+  inline bool operator>(const TraceResult& other) const { return distance > other.distance; }
+  inline bool operator<(const real& other) const { return distance < other; }
+  inline bool operator>(const real& other) const { return distance > other; }
 };
 
 #endif

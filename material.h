@@ -10,7 +10,7 @@ struct Material
   
   Material(const Value& v);
 
-  Color ambient, diffuse, specular;
+  Color ambient, diffuse, specular, reflect;
 
   real specularity;
 };

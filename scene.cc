@@ -25,7 +25,7 @@ Color Scene::render(int px, int py, const vec3& r) const
 {
   vec3 start = camera.position;
   const real s = std::min(sizeX, sizeY);
-  vec3 aim = start + camera.forward + (px - sizeX/2)/s*camera.left + (sizeY/2 - py)/s*camera.up + r;
+  vec3 aim = start + 1.4*camera.forward + (px - sizeX/2)/s*camera.left + (sizeY/2 - py)/s*camera.up + r;
   vec3 direction = (aim-start).normalize();
   return Scene::shade(start, direction);
 }
@@ -47,11 +47,9 @@ Color Scene::shade(const vec3& start, const vec3& direction) const
     Material material = result.object->getMaterial(result.position);
     Color c = material.ambient;
 
-    vec3 random = vec3_rand(1.0);
-  
     for ( LightList::const_iterator i = lights.begin(); i != lights.end(); ++i ) {
       Light& light = **i;
-      const vec3 d = light.position + random - result.position;
+      const vec3 d = light.position - result.position;
       const real dist = d.length();
       const vec3 v = d/dist;
       const real cosi = std::max(0.,v*result.normal);
@@ -59,6 +57,9 @@ Color Scene::shade(const vec3& start, const vec3& direction) const
      const real intensity = light.intensity/dist/dist;
 	c += intensity*(material.diffuse*light.color*cosi +
 			material.specular*light.color*(material.specularity + 2)/(2*M_PI)*std::pow(cosi, material.specularity));
+	if ( !material.reflect.isZero() ) {
+	  c += material.reflect*shade( result.position, direction.reflect(result.normal) );
+	}
       }
     }
     return c;

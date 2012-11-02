@@ -49,6 +49,8 @@ public:
 
   inline vec3 normalize() { return *this/length(); }
 
+  inline vec3 reflect(const vec3& normal) const { const real a = (*this)*normal; return (*this) - normal*a*2.0; }
+
   const real& operator[](int i) const { assert(i>=0 && i<3); return data[i]; }
   real& operator[](int i) { assert(i>=0 && i<3); return data[i]; }
 
