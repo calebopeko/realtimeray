@@ -135,7 +135,7 @@ void Renderer::render()
   if ( frame.status == Frame::Approx ) {
     for ( int ix=0; ix < xSize-blocksize+1; ix+=blocksize ) {
       for ( int iy=0; iy < ySize-blocksize+1; iy+=blocksize ) {
-	Color c = scene.render(ix+blocksize/2, iy+blocksize/2, vec3());
+	Color c = scene.render(ix+blocksize/2, iy+blocksize/2, vec3(), 1);
 	for ( int jx=0; jx<blocksize; jx++ ) {
 	  for ( int jy=0; jy<blocksize; jy++ ) {
 	    frame(ix+jx,iy+jy) = c;
@@ -153,7 +153,7 @@ void Renderer::render()
     const int row = rand() % cols;
     for ( int iy=row*(ySize/rows); iy < (row+1)*ySize/rows; ++iy ) {
       for ( int ix=col*(xSize/cols); ix < (col+1)*xSize/cols; ++ix ) {
-	frame(ix,iy) += scene.render(ix, iy, r);
+	frame(ix,iy) += scene.render(ix, iy, r, 10);
 	frame.samples(ix,iy)++;
       }
     }

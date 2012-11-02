@@ -11,7 +11,7 @@
 typedef double real;
 
 const real LARGE_NUMBER = 1e10;
-const real SMALL_NUMBER = 1e-3;
+const real SMALL_NUMBER = 1e-5;
 
 class vec3
 {

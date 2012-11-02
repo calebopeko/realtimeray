@@ -21,13 +21,13 @@ void Scene::init(const std::string& path, int sx, int sy)
   camera = Camera(sceneFile("camera"));
 }
 
-Color Scene::render(int px, int py, const vec3& r) const
+Color Scene::render(int px, int py, const vec3& r, int bounces) const
 {
   vec3 start = camera.position;
   const real s = std::min(sizeX, sizeY);
   vec3 aim = start + 1.4*camera.forward + (px - sizeX/2)/s*camera.left + (sizeY/2 - py)/s*camera.up + r;
   vec3 direction = (aim-start).normalize();
-  return Scene::shade(start, direction);
+  return Scene::shade(start, direction, bounces);
 }
 
 TraceResult Scene::trace(const vec3& start, const vec3& direction) const
@@ -40,7 +40,7 @@ TraceResult Scene::trace(const vec3& start, const vec3& direction) const
   return result;
 }
 
-Color Scene::shade(const vec3& start, const vec3& direction) const
+Color Scene::shade(const vec3& start, const vec3& direction, int bouncesLeft) const
 {
   TraceResult result = trace(start, direction);
   if ( result.object ) {
@@ -49,7 +49,7 @@ Color Scene::shade(const vec3& start, const vec3& direction) const
 
     for ( LightList::const_iterator i = lights.begin(); i != lights.end(); ++i ) {
       Light& light = **i;
-      const vec3 d = light.position - result.position;
+      const vec3 d = light.position + vec3_rand(1.0) - result.position;
       const real dist = d.length();
       const vec3 v = d/dist;
       const real cosi = std::max(0.,v*result.normal);
@@ -58,8 +58,8 @@ Color Scene::shade(const vec3& start, const vec3& direction) const
 	c += intensity*(material.diffuse*light.color*cosi +
 			material.specular*light.color*(material.specularity + 2)/(2*M_PI)*std::pow(cosi, material.specularity));
       }
-      if ( !material.reflect.isZero() ) {
-	c += material.reflect*shade( result.position, direction.reflect(result.normal) );
+      if ( bouncesLeft && !material.reflect.isZero() ) {
+	c += material.reflect*shade( result.position, direction.reflect(result.normal), bouncesLeft-1 );
       }
     }
     return c;

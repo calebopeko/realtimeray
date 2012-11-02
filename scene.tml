@@ -2,15 +2,24 @@
 objects = [
 
   {
-    type = plane;
+    type = checkerplane;
     position = [0; -1; 0; ];
     normal = [0; 1; 0;];
-    material = { 
+    orientation1 = [2; 0; 0;];
+    orientation2 = [0; 0; 2;];
+    material1 = { 
       ambient  = [0.1; 0.1; 0.1;];
       diffuse  = [0.8; 0.8; 0.8;];
       specular = [0.0; 0.0; 0.0;];
       reflect = [0.0; 0.0; 0.0;];
       specularity = 32;
+    };
+    material2 = { 
+      ambient  = [0.0; 0.0; 0.0;];
+      diffuse  = [0.1; 0.1; 0.1;];
+      specular = [0.1; 0.1; 0.1;];
+      reflect = [0.0; 0.0; 0.0;];
+      specularity = 128;
     };
   };
 
@@ -97,10 +106,10 @@ objects = [
     center = [1; -0.75; 7.5; ];
     radius = 0.25;
     material = { 
-      ambient  = [0.0; 0.1; 0.1;];
-      diffuse  = [0.0; 0.8; 0.8;];
+      ambient  = [0.0; 0.0; 0.0;];
+      diffuse  = [0.1; 0.1; 0.1;];
       specular = [0.1; 0.1; 0.1;];
-      reflect = [0.0; 0.0; 0.0;];
+      reflect = [0.5; 0.5; 0.5;];
       specularity = 128;
     };
   };
