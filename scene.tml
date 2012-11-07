@@ -18,7 +18,7 @@ objects = [
       ambient  = [0.0; 0.0; 0.0;];
       diffuse  = [0.1; 0.1; 0.1;];
       specular = [0.1; 0.1; 0.1;];
-      reflect = [0.0; 0.0; 0.0;];
+      reflect = [0.2; 0.2; 0.2;];
       specularity = 128;
     };
   };
